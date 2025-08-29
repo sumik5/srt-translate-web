@@ -1,0 +1,53 @@
+[tools]
+node = "24"
+pnpm = "latest"
+
+[env]
+NODE_ENV = "development"
+
+[tasks.install]
+description = "Install dependencies"
+run = "pnpm install"
+
+[tasks.build]
+description = "Build TypeScript project with esbuild"
+run = [
+    "echo 'Building TypeScript project with esbuild...'",
+    "pnpm run build"
+]
+
+[tasks."build:prod"]
+description = "Build TypeScript project for production"
+run = [
+    "echo 'Building TypeScript project for production...'",
+    "pnpm run build:prod"
+]
+
+[tasks.dev]
+description = "Start development server with proper cleanup"
+run = "node scripts/dev-server.js"
+
+[tasks.watch]
+description = "Watch mode only (without server)"
+run = "pnpm run dev"
+
+[tasks.type-check]
+description = "TypeScript type checking"
+run = "pnpm run type-check"
+
+[tasks.lint]
+description = "Lint TypeScript and JavaScript files"
+run = "pnpm run lint"
+
+[tasks.lint-fix]
+description = "Lint and fix TypeScript and JavaScript files"
+run = "pnpm run lint:fix"
+
+[tasks.clean]
+description = "Clean build artifacts"
+run = [
+    "rm -rf dist/",
+    "rm -f srt-translator.bundle.js",
+    "rm -f srt-translator.bundle.js.map",
+    "rm -f srt-translator.min.js"
+]

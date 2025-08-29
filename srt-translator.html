@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRT翻訳ツール - LM Studio対応</title>
+    <link rel="stylesheet" href="srt-translator.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <div class="header-title">
+                    <h1>SRT Translation</h1>
+                </div>
+                <div class="header-controls">
+                    <button id="translateBtn" class="btn btn-default">
+                        <span class="btn-text">翻訳する</span>
+                        <span class="spinner"></span>
+                    </button>
+                    <button id="downloadAllBtn" class="btn btn-secondary" disabled>
+                        全てダウンロード
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Alert Messages -->
+            <div class="alert alert-error" id="errorMessage"></div>
+
+            <!-- Controls Bar -->
+            <div class="controls-bar">
+                <div class="control-group">
+                    <label class="label" for="targetLang">翻訳先言語</label>
+                    <select id="targetLang" class="select">
+                        <option value="日本語" selected>日本語</option>
+                        <option value="英語">英語</option>
+                        <option value="中国語">中国語</option>
+                        <option value="韓国語">韓国語</option>
+                        <option value="スペイン語">スペイン語</option>
+                        <option value="フランス語">フランス語</option>
+                        <option value="ドイツ語">ドイツ語</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label class="label" for="apiUrl">API URL</label>
+                    <input type="text" id="apiUrl" class="input" value="http://127.0.0.1:1234" style="width: 15rem;">
+                </div>
+
+                <div class="control-group">
+                    <label class="label" for="modelName">モデル</label>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <select id="modelName" class="select" style="min-width: 12rem;">
+                            <option value="">読み込み中...</option>
+                        </select>
+                        <button id="refreshModels" class="btn btn-outline btn-icon" title="モデル一覧を更新">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 2v6h-6"></path>
+                                <path d="M3 12a9 9 0 0 1 15-6.7L21 8"></path>
+                                <path d="M3 22v-6h6"></path>
+                                <path d="M21 12a9 9 0 0 1-15 6.7L3 16"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="label" for="chunkSize">チャンクサイズ</label>
+                    <input type="number" id="chunkSize" class="input" value="2000" min="500" max="10000" style="width: 6rem;" title="一度に翻訳する最大文字数（複数の字幕をまとめて処理）">
+                </div>
+
+
+                <div class="control-group" style="flex: 1;">
+                    <label class="label">&nbsp;</label>
+                    <div id="progressInfo" style="display: none;">
+                        <span id="statusMessage" style="font-size: 0.875rem; color: hsl(var(--muted-foreground));">処理中...</span>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- File Upload Area -->
+            <div class="upload-container">
+                <label class="upload-area" id="uploadArea">
+                    <div class="upload-content">
+                        <svg class="upload-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="17 8 12 3 7 8"></polyline>
+                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                        </svg>
+                        <p class="upload-text">
+                            <span class="upload-text-primary">クリックして複数のSRTファイルをアップロード</span>
+                        </p>
+                        <p class="upload-text-secondary">またはファイルをドラッグ&ドロップ</p>
+                        <p class="upload-text-note">SRT形式のファイルのみ対応（複数選択可能）</p>
+                    </div>
+                    <input type="file" id="fileInput" class="hidden" accept=".srt" multiple>
+                </label>
+            </div>
+
+            <!-- File List Container -->
+            <div class="file-list-container" id="fileListContainer" style="display: none;">
+                <div class="file-list-header">
+                    <h2 class="file-list-title">アップロード済みファイル</h2>
+                </div>
+                <div class="file-list" id="fileList">
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- External JavaScript -->
+    <script src="srt-translator.bundle.js"></script>
+</body>
+</html>

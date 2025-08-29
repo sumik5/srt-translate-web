@@ -1,0 +1,28 @@
+{
+  "name": "srt-translate",
+  "version": "1.0.0",
+  "description": "SRT Translation Tool with LM Studio",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "npm run type-check && node esbuild.config.js",
+    "build:prod": "npm run type-check && NODE_ENV=production node esbuild.config.js",
+    "build:watch": "node esbuild.config.js --watch",
+    "type-check": "tsc --noEmit",
+    "dev": "node esbuild.config.js --watch",
+    "dev:full": "python3 -m http.server 8000 & npm run dev",
+    "lint": "eslint src/**/*.ts --ext .ts",
+    "lint:fix": "eslint src/**/*.ts --ext .ts --fix",
+    "clean": "rm -rf dist/ srt-translator.bundle.js srt-translator.bundle.js.map srt-translator.min.js",
+    "serve": "python3 -m http.server 8000"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.6",
+    "@types/web": "^0.0.125",
+    "@typescript-eslint/eslint-plugin": "^6.18.1",
+    "@typescript-eslint/parser": "^6.18.1",
+    "esbuild": "^0.25.9",
+    "eslint": "^8.56.0",
+    "typescript": "^5.9.2"
+  }
+}
